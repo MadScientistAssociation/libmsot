@@ -1,3 +1,5 @@
+from misc_functions import *
+
 class userTable:
 
     def __init__(self, infile_content):

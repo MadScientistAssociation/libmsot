@@ -26,8 +26,13 @@ def convert_time(timestamp):
 
     # Convert timestamp_le to int
     timestamp_int = int(timestamp_le, 16)
-
-    return (datetime.utcfromtimestamp((timestamp_int - epoch_as_filetime) / hundreds_of_ns))
+    # Make sure timestamp is not 0
+    # If 0, return 1/1/1970
+    # TODO: figure out why there are some 0 values
+    if timestamp_int != 0:
+        return(datetime.utcfromtimestamp((timestamp_int - epoch_as_filetime) / hundreds_of_ns))
+    else:
+        return(1) # Filler value
 
 
 def chunker(data, query_size, fillvalue='0'):
