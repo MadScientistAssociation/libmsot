@@ -3,9 +3,9 @@
 
 import sys
 import csv
-from slnclass import *
-from evtclass import *
-from userclass import *
+from sln_tbl_parse import *
+from evt_tbl_parse import *
+from user_tbl_parse import *
 
 def check_args():
 
