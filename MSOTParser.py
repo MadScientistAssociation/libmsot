@@ -1,4 +1,4 @@
- # TBL Parser
+# TBL Parser
 # Arguments: sln.tbl path, evt.tbl path, output file (csv)
 
 import sys

@@ -1,26 +1,4 @@
-from datetime import datetime, timedelta
-
-def convert_time(timestamp):
-
-    ''' Windows NT time is specified as the number of 100 nanosecond intervals since 
-        01/01/1601 00:00:00 UTC. It is stored as a 64 bit value. Python time libraries use
-        the format of seconds since 01/01/1970. '''
-    
-    epoch_as_filetime = 116444736000000000
-    hundreds_of_ns = 10000000
-    
-    # Convert to little endian before converting to int. Timestamp is a string containing a hex value.
-    # Split into a list (1 byte per element), reverse the list, and convert back to string.
-    timestamp_le = []
-    for offset in range(0, 16, 2):
-        timestamp_le.append(timestamp[offset:offset+2])
-    timestamp_le = timestamp_le[::-1]
-    timestamp_le = ''.join(timestamp_le)
-    
-    # Convert timestamp_le to int
-    timestamp_int = int(timestamp_le, 16)
-
-    return(datetime.utcfromtimestamp((timestamp_int - epoch_as_filetime) / hundreds_of_ns))
+from misc_functions import *
 
 class evtTable:
 
