@@ -9,8 +9,8 @@ class userTable:
         # self.entries format is
         # [last modified, username, domain NetBios (short) name,
         #         0          1                   2
-        # domain/workgroup FQDN, machine name, telemetry agent version,
-        #       3                    4                   5
+        # machine name, domain/workgroup name, telemetry agent version,
+        #       3                4                       5
         # network share upload path, machine hardware specs, # of processors,
         #         6                         7                    8
         # CPU architecture, RAM, screen resolution, OS version, OS language ID,
