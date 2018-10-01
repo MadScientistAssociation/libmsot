@@ -1,2 +1,3 @@
 *.tbl
 *.csv
+__pycache__
