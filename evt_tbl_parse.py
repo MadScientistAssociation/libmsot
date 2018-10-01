@@ -4,14 +4,14 @@ class evtTable:
 
     def __init__(self, infile_content):
         self.infile_content = infile_content
-        
+
         # dict containing information about each table entry
         self.entries = {}
         # entries structure is:
             # key: offset
-            # value: list [entry_num,  event_id, event_desc, doc_id, timestamp]
-            #                 0            1          2         3         4
- 
+            # value: list [entry_num,  timestamp 1, event_id, event_desc, GUID, timestamp 2]
+            #                 0            1          2         3          4         5
+
         # dict containing definitions for the event_id codes. These are listed in full at:
         # https://msdn.microsoft.com/en-us/library/office/jj230106.aspx
         self.event_codes = {
@@ -38,22 +38,29 @@ class evtTable:
         }
 
     def parse_entries(self):
-        
+
         doc_length = len(self.infile_content)
-        byte = 44 # Start reading the evt file at the first entry
+        byte = 40 # Start reading the evt file at the first entry
 
         # Search through the file content in memory, looking for the table entries.
         while(byte < doc_length):
-        
-            offset = byte
+
+            # The first field is block length, which is always 156
+            # No need to store this field
+            offset = byte + 4
             self.entries[offset] = []
-        
-            # The entry number is the first byte
-            entry_num = self.infile_content[byte]
+
+            # The entry number is the second byte
+            entry_num = self.infile_content[byte+4]
             self.entries[offset].append(entry_num)
-            
-            # The event ID is at offset 32 (one byte)
-            event_id = self.infile_content[byte+32]
+
+            # Timestamp at offsets 24 - 31
+            timestamp = self.infile_content[byte+24:byte+32]
+            timestamp_hex = timestamp.hex()
+            self.entries[offset].append(convert_time(timestamp_hex))
+
+            # The event ID is at offset 36 (one byte)
+            event_id = self.infile_content[byte+36]
             self.entries[offset].append(event_id)
             # Event ID can be mapped to a text description in self.event_codes
             if event_id in self.event_codes:
@@ -61,21 +68,13 @@ class evtTable:
             else:
                 event_desc = 'Unknown'
             self.entries[offset].append(event_desc)
-            
-            # The docid is offsets 36-51
-            self.entries[offset].append(self.infile_content[byte+36:byte+52].hex())
-            
-            # The event timestamp is offsets 132 - 139
-            timestamp = self.infile_content[byte+132:byte+140]
+
+            # The GUID is offsets 40-55
+            self.entries[offset].append(self.infile_content[byte+40:byte+56].hex())
+
+            # Timestamp at offsets 136 - 143
+            timestamp = self.infile_content[byte+136:byte+144]
             timestamp_hex = timestamp.hex()
             self.entries[offset].append(convert_time(timestamp_hex))
-            
-            # Print some results
-            #print(entry_num)
-            #print(event_id)
-            #print(self.entries[offset][2]) # description
-            #print(self.entries[offset][3]) # docid
-            #print(self.entries[offset][4]) # timestamp (UTC)
-            #print("\n")
-        
+
             byte += 156 # Jump to next entry

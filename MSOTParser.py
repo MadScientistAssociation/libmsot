@@ -76,10 +76,10 @@ def build_entry_dict(sln_table, evt_table):
             docid_offsets[sln_table.entries[entry][1]][0].append(entry)
 
     for entry in evt_table.entries:
-        if evt_table.entries[entry][3] not in docid_offsets:
-            print("DOCID %s found in evt table but not sln table!" % evt_table.entries[entry][3])
+        if evt_table.entries[entry][4] not in docid_offsets:
+            print("DOCID %s found in evt table but not sln table!" % evt_table.entries[entry][4])
         else:
-            docid_offsets[evt_table.entries[entry][3]][1].append(entry)
+            docid_offsets[evt_table.entries[entry][4]][1].append(entry)
 
     return(docid_offsets)
 
@@ -161,10 +161,10 @@ if __name__ == '__main__':
 
         # Get the evt table values for this document. There can be multiple entries per docid.
         for entry in range(len(docid_offsets[docid][1])):
-            timestamp  = evt_table.entries[docid_offsets[docid][1][entry]][4].strftime('%Y-%m-%d %H:%M:%S.%f')
+            timestamp  = evt_table.entries[docid_offsets[docid][1][entry]][5].strftime('%Y-%m-%d %H:%M:%S.%f')
             entry_num  = evt_table.entries[docid_offsets[docid][1][entry]][0]
-            event_id   = evt_table.entries[docid_offsets[docid][1][entry]][1]
-            event_desc = evt_table.entries[docid_offsets[docid][1][entry]][2]
+            event_id   = evt_table.entries[docid_offsets[docid][1][entry]][2]
+            event_desc = evt_table.entries[docid_offsets[docid][1][entry]][3]
             results.append([timestamp, entry_num, event_id, event_desc, doc_id, doc_title, doc_path, doc_type, doc_author, addin_name, desc, user, host])
 
     with open(sys.argv[4], 'w', newline = '') as csvfile:
