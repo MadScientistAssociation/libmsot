@@ -18,7 +18,7 @@ MSOTParser.py is a parser for the binary files sln.tbl, user.tbl, and evt.tbl. I
 
 ## Compatibility
 
-Python 3.6 and greater.
+This project is primarily intended for use with Python 3.6 and greater. However, to facilitate compatibility with Autopsy, there is a Python 2.7 backport in the 27_Backport folder.
 
 ## Usage
 
