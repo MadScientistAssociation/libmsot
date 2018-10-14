@@ -1,3 +1,6 @@
 *.tbl
 *.csv
+*.pyc
 __pycache__
+.DS_Store
+*.zip
