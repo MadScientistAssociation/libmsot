@@ -22,13 +22,13 @@ Permission is granted to copy, distribute and/or modify this document under the 
 |   ---   |      ---    |    ---       |        ---      |
 |   0.1   | Sam Koffman | October 2018 | Initial Version |
 
-# 1.0 Overview
+## 1.0 Overview
 
 The Microsoft Office telemetry agent was first introduced in 2013 with the release of Office 2013. It is used to collect data from various Microsoft Office applications, including Access, Excel, OneNote, Outlook, PowerPoint, Project, Publisher, Visio, and Word. Information collected will depend on the version of Office and the telemetry agent installed, as detailed in section 1.2. Typical data collection will include user name, computer name, filename, document title and author, and last loaded date[1].
 
 Telemetry agent data is initially stored locally the %UserProfile%\AppData\Local\Microsoft\Office\16.0\Telemetry\ folder. Depending on the deployment configuration, it may then be uploaded to a network share and processed into a SQL database.
 
-# 1.1 Test Version
+### 1.1 Test Version
 
 The following versions of programs were used to test the information in this document:
 
@@ -37,11 +37,59 @@ The following versions of programs were used to test the information in this doc
 * Microsoft SQL Server 2016 Standard Service Pack 2
 * Microsoft Office Professional Plus 2016
 
-# 1.2 Timestamps
+### 1.2 Timestamps
 
 TBL files store timestamps using the Windows NT (win32 epoch) time format, represented as the number of 100 nanosecond intervals since 01/01/1601 00:00:00 UTC[2]. The timestamps are stored as a 64-bit value.
 
-# 1.3 Text Encoding
+### 1.3 Text Encoding
 
 Unless other specified, all text contained in TBL files is encoded as UTF-16 little-endian.
 
+## 2.0 File Structure
+
+### 2.1 Header
+
+TBL files start with a 16-byte signature, divided into two 8-byte segments. The first segment is common across TBL files, while the second defines the TBL as containing either user data (user.tbl), event data (evt.tbl), or solution data (sln.tbl). The header is the *only* section of the TBL file utilizing UTF-8 text encoding.
+
+| Offset | Size (b) | Value (hex)      | Value (UTF-8) |Description |
+| ---    | ---      | ---              | ---           | ---        |
+|0       | 8        | 2000000053444454 | ...SDDT       | Signature  |
+|8       | 8        | 0100000052455355 | ...RESU       | user.tbl   |
+|8       | 8        | 01000000544E5645 | ...TNVE       | evt.tbl    |
+|8       | 8        | 01000000564E4953 | ...VNIS       | sln.tbl    |
+
+### 2.2 user.tbl
+
+The user.tbl file contains information about the user under which the telemetry agent is running, the network to which the machine is joined, and details on the hardware on the underlying machine.
+
+Numeric values in the table below are stored as 16-bit little-endian unsigned integers unless otherwise noted.
+
+| Offset | Size (b) | Description                                      |
+| ---    | ---      | ---                                              |
+| 36     | 8        | Timestamp                                        |
+| 44     | 512      | User account name (user principal name prefix[3] |
+| 558    | 512      | Legacy domain name                               |
+| 1124   | 30       | NetBIOS host name                                |
+| 1156   | 510      | DNS domain name (without hostname)               |
+| 1668   | 2        | Telemetry agent minor version                    |
+| 1670   | 2        | Telemetry agent major version                    |
+| 1672   | 2        | Telemetry agent version revision                 |
+| 1674   | 2        | Telemetry agent version build                    |
+| 1676   | 512      | Path to network share where telemetry data is uploaded | 
+| 2196   | 158      | Hardware specifications for local computer       |
+| 2356   | 4        | Number of logical processors (32-bit unsigned int) | 
+| 2360   | 4        | Number of physical processors (32-bit unsigned int) | 
+| 2364   | 4        | CPU architecture (32-bit unsigned int)           |
+| 2368   | 4        | RAM in MB (32-bit unsigned int)                  |
+| 2372   | 4        | Screen height (32-bit unsigned int)              |
+| 2376   | 4        | Screen width (32-bit unsigned int)               |
+| 2380   | 2        | Operating system minor version                   |
+| 2382   | 2        | Operating system major version                   |
+| 2384   | 2        | Operating system product type                    |
+| 2386   | 2        | Operating system version build                   |
+| 2388   | 2        | Operating system default user interface language ID |
+| 2392   | 2        | Operating system default language ID             |
+| 2396   | 2        | Internet Explorer minor version                  |
+| 2398   | 2        | Internet Explorer major version                  |
+| 2400   | 2        | Internet Explorer version revision               |
+| 2402   | 2        | Internet Explorer version build                  | 
