@@ -11,3 +11,27 @@
 | Classification: | Public | 
 | Keywords:       | Microsoft Office, Telemetry, TBL |
 
+## License
+
+`Copyright © 2018, Sam Koffman <sam@madscientistassociation.org>.
+Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license can be found at https://www.gnu.org/licenses/fdl-1.3.en.html.`
+
+## Revision History
+
+| Version |    Author   |    Date      |     Comments    |
+|   ---   |      ---    |    ---       |        ---      |
+|   0.1   | Sam Koffman | October 2018 | Initial Version |
+
+# 1.0 Overview
+
+The Microsoft Office telemetry agent was first introduced in 2013 with the release of Office 2013. It is used to collect data from various Microsoft Office applications, including Access, Excel, OneNote, Outlook, PowerPoint, Project, Publisher, Visio, and Word. Information collected will depend on the version of Office and the telemetry agent installed, as detailed in section 1.2. Typical data collection will include user name, computer name, filename, document title and author, and last loaded date[1].
+
+Telemetry agent data is initially stored locally the %UserProfile%\AppData\Local\Microsoft\Office\16.0\Telemetry\ folder. Depending on the deployment configuration, it may then be uploaded to a network share and processed into a SQL database.
+
+# 1.1 Test Version
+
+The following versions of programs were used to test the information in this document:
+
+* Microsoft Windows 10 Professional
+* Microsoft Windows Server 2016
+* Microsoft Office Professional 2016
