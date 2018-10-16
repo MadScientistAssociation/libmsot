@@ -32,6 +32,7 @@ Telemetry agent data is initially stored locally the %UserProfile%\AppData\Local
 
 The following versions of programs were used to test the information in this document:
 
-* Microsoft Windows 10 Professional
-* Microsoft Windows Server 2016
+* Microsoft Windows 10 Professional v. 1803
+* Microsoft Windows Server 2012 R2
+* Microsoft SQL Server 2016 Standard Service Pack 2
 * Microsoft Office Professional 2016
