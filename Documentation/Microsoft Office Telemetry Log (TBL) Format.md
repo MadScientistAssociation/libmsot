@@ -93,3 +93,51 @@ Numeric values in the table below are stored as 16-bit little-endian unsigned in
 | 2398   | 2        | Internet Explorer major version                  |
 | 2400   | 2        | Internet Explorer version revision               |
 | 2402   | 2        | Internet Explorer version build                  | 
+
+### 2.3 evt.tbl
+
+The evt.tbl maps each event logged by the telemetry agent to an event type, defined below. Beginning at offset 40, this file consists of 156-byte blocks, each representing a specific event.
+
+#### 2.3.1 Event Codes
+
+Event codes are identified as follows[4]:
+
+| ID | Title | Severity   | Description                                |
+|--- | ---   | ---        | ---                                        |
+| 1  | Document loaded successfully | None | File opened without any issues |
+| 2  | Document failed to load | Warning | Application unable to load file |
+| 3  | Template loaded successfully | None | Template file opened without any issues |
+| 4  | Template failed to load | Warning | Application unable to load template file |
+| 5  | Add-in loaded successfully | None | Add-in loaded successfully within the application |
+| 6  | Add-in failed to load | Critical | Application unable to load add-in |
+| 7  | Add-in manifest downloaded successfully | None | Host application successfully loaded manifest file for add-in |
+| 8  | Add-in manifest did not download | Critical | Application unable to load manifest file for add-in from SharePoint catalog, corporate catalog, or the Office Store |
+| 9  | Add-in manifest could not be parsed | Critical | Application loaded add-in, but could not read the XML |
+| 10 | Add-in used too much CPU | Critical | Add-in used more than 90% of CPU resources over a finite period of time |
+| 11 | Application crashed on load | Critical | Application tried to load a document or solution on launch, but problems with the document or solution prevented application launch |
+| 12 | Application closed due to a problem | Critical | Something caused a critical error in the application and it needed to close |
+| 13 | Document closed successfully | None | File closed without any issues |
+| 14 | Application session extended | None | Application sessions for a document or solution should only last 24 hours, or the application creates a new session |
+| 15 | Add-in disabled due to string search time-out | None | Outlook e-mail add-ins use regular expressions to search a message subject line and body to determine whether they should be displayed. Outlook disabled the add-in because it timed out repeatedly while trying to match a regular expression |
+| 16 | Document open when application crashed | Critical | File was opened when application crashed |
+| 17 | Add-in closed successfully | Informative | Application successfully shut down add-in |
+| 18 | Application closed successfully | None | Host application successfully closed Office Add-in |
+| 19 | Add-in encountered runtime error | Critical | Office Add-in had a problem that caused it to fail |
+| 20 | Add-in failed to verify licensing | Critical | Licensing information for Office Add-in could not be verified |
+
+
+
+#### 2.3.2 Block Structure
+
+Numeric values in the table below are stored as 32-bit little-endian unsigned integers unless otherwise noted. Offsets are given from the start of the block.
+
+| Offset | Size (b) | Description                                      |
+| ---    | ---      | ---                                              |
+| 0      | 4        | Block size                                       |
+| 4      | 4        | Entry number                                     |
+| 24     | 8        | Timestamp                                        |
+| 36     | 4        | Event code                                       |
+| 40     | 16       | Document GUID                                    |
+| 136    | 8        | Timestamp                                        |
+| 144    | 8        | Flags                                            | 
+| 152    | 4        | Block footer                                     |
