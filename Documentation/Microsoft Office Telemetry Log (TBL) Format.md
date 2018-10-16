@@ -40,3 +40,8 @@ The following versions of programs were used to test the information in this doc
 # 1.2 Timestamps
 
 TBL files store timestamps using the Windows NT (win32 epoch) time format, represented as the number of 100 nanosecond intervals since 01/01/1601 00:00:00 UTC[2]. The timestamps are stored as a 64-bit value.
+
+# 1.3 Text Encoding
+
+Unless other specified, all text contained in TBL files is encoded as UTF-16 little-endian.
+
