@@ -35,4 +35,8 @@ The following versions of programs were used to test the information in this doc
 * Microsoft Windows 10 Professional v. 1803
 * Microsoft Windows Server 2012 R2
 * Microsoft SQL Server 2016 Standard Service Pack 2
-* Microsoft Office Professional 2016
+* Microsoft Office Professional Plus 2016
+
+# 1.2 Timestamps
+
+TBL files store timestamps using the Windows NT (win32 epoch) time format, represented as the number of 100 nanosecond intervals since 01/01/1601 00:00:00 UTC[2]. The timestamps are stored as a 64-bit value.
