@@ -182,8 +182,8 @@ The telemetry agent can be enabled in several ways:
 
 Keys are written to two possible locations in the Windows registry:
 
-1. HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\OSM (when enabled through Telemetry Log or manually edited)
-2. HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\OSM (when enabled by group policy; overrides user settings)
+1. `HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\OSM` (when enabled through Telemetry Log or manually edited)
+2. `HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\OSM` (when enabled by group policy; overrides user settings)`
 
 | Value           | Type | Description   | Values                                |
 |---              | ---  | ---           | ---                                   |
@@ -194,3 +194,33 @@ Keys are written to two possible locations in the Windows registry:
 | enablefileobfuscation | REG_DWORD | Obfuscate file name, path, and title of Office document before uploading data to shared folder | 0: do not obfuscate (default); 1: obfuscate |
 | AgentInitWait | REG_DWORD | Time agent waits before scanning a client and uploading data to shared folder | Wait time in seconds; *defaults to 600 if value doesn’t exist* |
 | AgentRandomDelay | REG_DWORD | Agent waits between 0 and AgentRandomDelay minutes plus AgentInitWait value before scanning or uploading telemetry data | Wait time in minutes
+
+Additional registry keys may be added to prevent specific applications or solution components from uploading telemetry data. These keys are written to:
+
+`HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\OSM\preventedapplications `
+
+| Value            | Type | Description   | Values                                |
+|---               | ---  | ---           | ---                                   |
+|accesssolution    | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|olksolution       | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|onenotesolution   | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|pptsolution       | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|projectsolution   | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|publishersolution | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|visiosolution     | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|wdsolution        | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+|xlsolution        | REG_DWORD | Prevent telemetry reporting for specific Office applications | 0: allow reporting (default); 1: prevent reporting |
+
+`HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\OSM\preventedsolutiontypes`
+
+| Value            | Type | Description   | Values                                |
+|---               | ---  | ---           | ---                                   |
+|agave             | REG_DWORD | Prevent telemetry reporting for specific Office solutions. Note that solution types are still reported. | 0: allow reporting (default); 1: prevent reporting |
+|appaddins         | REG_DWORD | Prevent telemetry reporting for specific Office solutions. Note that solution types are still reported. | 0: allow reporting (default); 1: prevent reporting |
+|comaddins         | REG_DWORD | Prevent telemetry reporting for specific Office solutions. Note that solution types are still reported. | 0: allow reporting (default); 1: prevent reporting |
+|documentfiles     | REG_DWORD | Prevent telemetry reporting for specific Office solutions. Note that solution types are still reported. | 0: allow reporting (default); 1: prevent reporting |
+|templatefiles     | REG_DWORD | Prevent telemetry reporting for specific Office solutions. Note that solution types are still reported. | 0: allow reporting (default); 1: prevent reporting |
+
+
+
+
