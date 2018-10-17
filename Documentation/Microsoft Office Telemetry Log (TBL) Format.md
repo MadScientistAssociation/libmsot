@@ -169,3 +169,28 @@ Numeric values in the table below are stored as 32-bit little-endian unsigned in
 | 1140   | 2        | FileFormat number                                |
 | 1402   | 256      | Document author name                             |
 | 1672   | 512      | Add-in friendly name                             |
+
+## 3. Detection of Telemetry Agent
+
+The telemetry agent can be enabled in several ways:
+
+1. Using the Telemetry Log application included with Office
+2. Keys can be added to the Windows registry
+3. Group policy can be pushed to the machine
+
+### 3.1 Registry Keys
+
+Keys are written to two possible locations in the Windows registry:
+
+1. HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\OSM (when enabled through Telemetry Log or manually edited)
+2. HKEY_CURRENT_USER\Software\Policies\Microsoft\Office\16.0\OSM (when enabled by group policy; overrides user settings)
+
+| Value           | Type | Description   | Values                                |
+|---              | ---  | ---           | ---                                   |
+| enablelogging   | REG_DWORD | Enable telemetry |0: disable logging and agent (default); 1: enable logging and agent |
+| enableupload    | REG_DWORD | Upload telemetry data to shared folder | 0: do not upload (default); 1: upload |
+| commonfileshare | REG_SZ | Shared folder for storing telemetry data | UNC path |
+| tagN            | REG_SZ | Custom tags for telemetry data, which will show in Telemetry Dashboard | Custom data |
+| enablefileobfuscation | REG_DWORD | Obfuscate file name, path, and title of Office document before uploading data to shared folder | 0: do not obfuscate (default); 1: obfuscate |
+| AgentInitWait | REG_DWORD | Time agent waits before scanning a client and uploading data to shared folder | Wait time in seconds; *defaults to 600 if value doesn’t exist* |
+| AgentRandomDelay | REG_DWORD | Agent waits between 0 and AgentRandomDelay minutes plus AgentInitWait value before scanning or uploading telemetry data | Wait time in minutes
