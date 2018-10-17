@@ -222,5 +222,30 @@ Additional registry keys may be added to prevent specific applications or soluti
 |templatefiles     | REG_DWORD | Prevent telemetry reporting for specific Office solutions. Note that solution types are still reported. | 0: allow reporting (default); 1: prevent reporting |
 
 
+### 3.2 Group Policies
 
+Office telemetry can also be managed using Windows Group Policy. The following policies may be present if telemetry is configured, and located at:
 
+`User Configuration\Policies\Administrative Templates\Microsoft Office 2016\Telemetry Dashboard`
+
+| Setting Name            | Description                    |
+|---                      | ---                            |
+|Turn on telemetry data collection | Enable telemetry agent |
+|Turn on data uploading for the Telemetry Agent | Enable the telemetry agent to periodically upload data to a shared folder |
+|Specify the UNC path to store Office telemetry data | Location of shared folder where telemetry agent will upload data |
+|Specify custom tags for Office telemetry data | Add custom tags to data uploaded by the telemetry agent
+|Turn on privacy settings in Telemetry Agent | Telemetry agent will obfuscate file name, file path, and title of documents when uploading telemetry data | 
+|Office applications to exclude from Telemetry Agent reporting | Prevent data from specific applications from being collected |
+|Office solutions to exclude from Telemetry  | Prevent data from specific Office solutions from being collected |
+
+## 4. References
+
+[1] Brown, Daniel H. "Data That the Telemetry Agent Collects in Office." Microsoft.com. Dec. 16, 2016. [Online]. Available: https://docs.microsoft.com/en-us/deployoffice/compat/data-that-the-telemetry-agent-collects-in-office. [Accessed Aug. 27, 2018].
+
+[2] Abdulla, Shijaz. “How to convert date/time attributes in Active Directory to standard time format.” Microsoft.com. Jul. 6, 2018. [Online] Available: https://support.microsoft.com/en-us/help/555936. [Accessed Sep. 20, 2018].
+
+[3] Microsoft, “User Naming Attributes.” Microsoft, May 30 2018. [Online] Available: https://docs.microsoft.com/en-us/windows/desktop/ad/naming-properties. [Accessed September 10, 2018].
+
+[4] Narva, Niveditha, and Linda Caputo. "Troubleshooting Office Files and Custom Solutions with the Telemetry Log." Microsoft.com. September 16, 2015. [Online] Available: https://docs.microsoft.com/en-us/office/client-developer/shared/troubleshooting-office-files-and-custom-solutions-with-the-telemetry-log. [Accessed September 13, 2018].
+
+[5] Brown, Daniel H. "Deploy Telemetry Dashboard." Microsoft.com. November 29, 2017. [Online] Available: https://docs.microsoft.com/en-us/deployoffice/compat/deploy-telemetry-dashboard#agentregistry. [Accessed August 27, 2018].
