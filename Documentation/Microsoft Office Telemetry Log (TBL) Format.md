@@ -22,7 +22,7 @@ Permission is granted to copy, distribute and/or modify this document under the 
 |   ---   |      ---    |    ---       |        ---      |
 |   0.1   | Sam Koffman | October 2018 | Initial Version |
 
-## 1.0 Overview
+## 1. Overview
 
 The Microsoft Office telemetry agent was first introduced in 2013 with the release of Office 2013. It is used to collect data from various Microsoft Office applications, including Access, Excel, OneNote, Outlook, PowerPoint, Project, Publisher, Visio, and Word. Information collected will depend on the version of Office and the telemetry agent installed, as detailed in section 1.2. Typical data collection will include user name, computer name, filename, document title and author, and last loaded date[1].
 
@@ -45,7 +45,7 @@ TBL files store timestamps using the Windows NT (win32 epoch) time format, repre
 
 Unless other specified, all text contained in TBL files is encoded as UTF-16 little-endian.
 
-## 2.0 File Structure
+## 2. File Structure
 
 ### 2.1 Header
 
@@ -141,3 +141,31 @@ Numeric values in the table below are stored as 32-bit little-endian unsigned in
 | 136    | 8        | Timestamp                                        |
 | 144    | 8        | Flags                                            | 
 | 152    | 4        | Block footer                                     |
+
+
+
+
+### 2.4 sln.tbl
+
+The sln.tbl includes the filename, path, size, and author name, and other metadata for each event logged by the telemetry agent. Beginning at offset 32, this file consists of 2,964-byte blocks, each representing a specific event.
+
+#### 2.4.1 Block Structure
+
+Numeric values in the table below are stored as 32-bit little-endian unsigned integers unless otherwise noted. Offsets are given from the start of the block.
+
+| Offset | Size (b) | Description                                      |
+| ---    | ---      | ---                                              |
+| 0      | 4        | Block size                                       |
+| 4      | 16       | Document GUID                                    |
+| 24     | 8        | Timestamp                                        |
+| 40     | 8        | Timestamp                                        |
+| 48     | 512      | Filename of the document or add-in               |
+| 568    | 512      | Absolute path of the document or add-in          |
+| 1100   | 2        | Telemetry agent minor revision (16-bit unsigned int) | 
+| 1102   | 2        | Telemetry agent major revision (16-bit unsigned int) | 
+| 1106   | 2        | Telemetry agent version build (16-bit unsigned int)  |
+| 1108   | 4        | Entry type (Application DLL: 0x09000000, Document: 0xFFFFFFFF) |
+| 1124   | 4        | Size of document/add-in file (bytes)             |
+| 1140   | 2        | FileFormat number                                |
+| 1402   | 256      | Document author name                             |
+| 1672   | 512      | Add-in friendly name                             |
